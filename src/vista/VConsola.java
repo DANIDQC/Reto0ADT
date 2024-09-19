@@ -15,7 +15,47 @@ public class VConsola {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Integer opc = 0;
+        
+        do{
+            
+            System.out.println("1. Crear una unidad didáctica y convocatoria."+
+            "2. Crear enunciado de examen."+
+            "3. Consultar enunciado."+
+            "4. Consultar convocatorias."+
+            "5. Visualizar el documento de enunciado."+
+            "6. Asignar enunciado a convocatoria."+
+            "0. Salir"+
+            "Elige una opcion: ");
+
+            opc = utilidades.Utilidades.leerInt(0, 6);
+
+            switch (opc) {
+                case 1:
+                    //opcion1();
+                    break;
+                case 2:
+                    //opcion2();
+                    break;
+                case 3:
+                    //opcion3();
+                    break;
+                case 4:
+                    //opcion4();
+                    break;
+                case 5:
+                    //opcion5();
+                    break;
+                case 6:
+                    //opcion6();
+                    break;
+                case 0:
+                    System.out.println("Hasta la vista.");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intenta de nuevo.");
+                    break;
+            }
+        }while(opc!=0);
     }
-    
 }
