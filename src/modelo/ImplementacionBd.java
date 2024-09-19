@@ -9,6 +9,6 @@ package modelo;
  *
  * @author 2dam
  */
-public class Usuario {
+public class ImplementacionBd {
     
 }
