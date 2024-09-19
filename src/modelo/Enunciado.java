@@ -13,9 +13,9 @@ public class Enunciado {
     private Integer id = 0;
     private String descripcion = "";
     private enum Dificultad {
-        LOW,
-        MEDIUM,
-        HIGH
+        BAJA,
+        MEDIA,
+        ALTA
       }
     private boolean disponible = true;
     private String ruta;

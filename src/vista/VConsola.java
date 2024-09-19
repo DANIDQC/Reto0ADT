@@ -5,6 +5,8 @@
  */
 package vista;
 
+import controlador.Dao;
+
 /**
  *
  * @author 2dam
@@ -14,6 +16,7 @@ public class VConsola {
     /**
      * @param args the command line arguments
      */
+   private Dao dao;
     public static void main(String[] args) {
         Integer opc = 0;
         
@@ -33,6 +36,7 @@ public class VConsola {
             switch (opc) {
                 case 1:
                     //opcion1();
+                    
                     break;
                 case 2:
                     //opcion2();
