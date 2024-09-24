@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.Dao;
+import modelo.Enunciado;
 
 /**
  *
@@ -13,11 +14,14 @@ import controlador.Dao;
  */
 public class VConsola {
 
+
+  
     /**
      * @param args the command line arguments
      */
    private Dao dao;
-    public static void main(String[] args) {
+   private Enunciado enunciado;
+    public static void main(String[] args, Enunciado Enunciado) {
         Integer opc = 0;
         
         do{
@@ -40,6 +44,7 @@ public class VConsola {
                     break;
                 case 2:
                     //opcion2();
+                    crearEnunciadoDeExamen(enunciado);
                     break;
                 case 3:
                     //opcion3();
@@ -62,4 +67,10 @@ public class VConsola {
             }
         }while(opc!=0);
     }
+      private static void crearEnunciadoDeExamen(Enunciado enunciado) {
+          
+          
+   
+    }
+
 }

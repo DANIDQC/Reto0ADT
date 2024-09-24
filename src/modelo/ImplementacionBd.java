@@ -5,10 +5,17 @@
  */
 package modelo;
 
+import controlador.Dao;
+
 /**
  *
  * @author 2dam
  */
-public class ImplementacionBd {
+public class ImplementacionBd implements Dao{
+
+    @Override
+    public boolean crearEnunciadoDeExamen(Enunciado enunciado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

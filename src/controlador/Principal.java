@@ -5,10 +5,13 @@
  */
 package controlador;
 
+import vista.VConsola;
+
 /**
  *
  * @author 2dam
  */
 public class Principal {
     
+    VConsola nuevo = new VConsola();
 }

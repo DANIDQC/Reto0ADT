@@ -5,10 +5,18 @@
  */
 package controlador;
 
+import modelo.Enunciado;
+
 /**
  *
  * @author 2dam
  */
-public class Dao {
-    
+public interface Dao {
+
+    /**
+     *
+     * @param enunciado
+     * @return
+     */
+    public boolean crearEnunciadoDeExamen(Enunciado enunciado);
 }
