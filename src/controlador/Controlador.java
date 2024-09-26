@@ -5,10 +5,22 @@
  */
 package controlador;
 
+import modelo.Enunciado;
+import modelo.ImplementacionBd;
+
 /**
  *
  * @author 2dam
  */
 public class Controlador {
+    ImplementacionBd imple= new ImplementacionBd();
     
+    /**
+     *
+     * @param enunciado
+     * @return
+     */
+    public boolean crearEnunciado(Enunciado enunciado ){
+        boolean crearEnunciado = imple.crearEnunciado(enunciado);
+        return crearEnunciado;    }
 }
