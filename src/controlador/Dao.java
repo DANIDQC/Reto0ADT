@@ -12,6 +12,8 @@ import modelo.ConvocatoriaExamen;
 import modelo.Enunciado;
 import modelo.UnidadDidactica;
 
+import modelo.Enunciado;
+
 /**
  *
  * @author lucia_puwj3zw

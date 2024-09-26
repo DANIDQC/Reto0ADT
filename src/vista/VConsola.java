@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package vista;
+
 import controlador.Controlador;
 import modelo.Dificultad;
 import modelo.Enunciado;
+
 /**
  *
  * @author 2dam
