@@ -19,6 +19,10 @@ public class ConvocatoriaExamen {
     private LocalDate LocalDate;
     private String curso = "";
 
+    public ConvocatoriaExamen(String descripcionConvocatoria) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getConvocatoria() {
         return convocatoria;
     }

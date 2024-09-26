@@ -32,7 +32,34 @@ public class ImplementacionBd implements Dao{
         
     }
    
-
+    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
+        con = ConexionBd.openConnection();
+        String CreacionUnidadDidactica ="Insert into unidadDidactica (acronimo, titulo, evaluacion, descripcion)values(?,?,?,?)";
+        try{
+            stmt= con.prepareStatement(CreacionUnidadDidactica);
+			stmt.setString(1, unidadDidactica.getAcronimo());
+			stmt.setString(2, unidadDidactica.getTitulo());
+                        stmt.setString(3, unidadDidactica.getEvaluacion());
+			stmt.setString (4, unidadDidactica.getDescripcion());			
+			stmt.executeUpdate();
+                        return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+			return false;
+        } finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (SQLException e) {
+			}
+			if (con != null) {
+				ConexionBd.closeConnection();
+			}
+		}
+        
+    }
+    
     @Override
     public boolean crearEnunciado(Enunciado enunciado) {
         con = ConexionBd.openConnection();

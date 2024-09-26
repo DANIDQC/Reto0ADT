@@ -8,19 +8,13 @@ package vista;
 import controlador.Controlador;
 import modelo.Dificultad;
 import modelo.Enunciado;
+import modelo.UnidadDidactica;
 
 /**
  *
  * @author 2dam
  */
 public class VConsola {
-
-    private static void crearUnidadDidactica(Controlador con) {
-    }
-    /**
-     * @param args the command line arguments
-     */
-   
    
     public static void main(String[] args) {
         Integer opc = 0;
@@ -45,7 +39,7 @@ public class VConsola {
                     break;
                 case 2:
                     //opcion2();
-               crearEnunciado(con);
+                crearEnunciado(con);
                     break;
                 case 3:
                     //opcion3();
@@ -69,6 +63,20 @@ public class VConsola {
             }
         }while(opc!=0);
     }
+    
+        private static void crearUnidadDidactica(Controlador con) {
+                
+          UnidadDidactica nuevo= new UnidadDidactica();
+          
+          nuevo.setAcronimo(utilidades.Utilidades.introducirCadena("Introduce el acronimo de la Unidad Didactica"));
+          nuevo.setTitulo(utilidades.Utilidades.introducirCadena("Introduce el titulo de la Unidad Didactica"));
+          nuevo.setEvaluacion(utilidades.Utilidades.introducirCadena("Introduce la evaluacion de la Unidad Didactica"));
+          nuevo.setDescripcion(utilidades.Utilidades.introducirCadena("Introduce la descripcion de la Unidad Didactica"));
+          // 
+          boolean existe= con.crearUnidadDidactica(nuevo);
+          
+    }
+    
       private static void crearEnunciado(Controlador con) {
                 
           Enunciado nuevo= new Enunciado();
@@ -78,7 +86,6 @@ public class VConsola {
           nuevo.setDisponible(utilidades.Utilidades.leerRespuesta("¿El enuciado esta disponible? si/no"));
           nuevo.setRuta(utilidades.Utilidades.introducirCadena("Introduce la ruta del enunciado"));
           // 
-          System.out.println(nuevo.toString());
           boolean existe= con.crearEnunciado(nuevo);
           
     }

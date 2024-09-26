@@ -7,6 +7,7 @@ package controlador;
 
 import modelo.Enunciado;
 import modelo.ImplementacionBd;
+import modelo.UnidadDidactica;
 
 /**
  *
@@ -23,4 +24,9 @@ public class Controlador {
     public boolean crearEnunciado(Enunciado enunciado ){
         boolean crearEnunciado = imple.crearEnunciado(enunciado);
         return crearEnunciado;    }
+
+    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
+         boolean crearUnidadDidactica = imple.crearUnidadDidactica(unidadDidactica);
+        return crearUnidadDidactica;    }
+    
 }
