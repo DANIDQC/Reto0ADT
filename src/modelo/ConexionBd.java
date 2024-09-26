@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  */
 public class ConexionBd {
     // Atributos
-	private static ConexionBd conn;
+	private static Connection conn = null;
 	// Credenciales para conexión a la base de datos
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "abcd*1234";
@@ -26,15 +27,17 @@ public class ConexionBd {
 	 * 
 	 * @return la conexión establecida.
 	 */
-	public static ConexionBd openConnection() {
+	public static Connection openConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = (ConexionBd) DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 			return conn;
 		} catch (SQLException e) {
 			System.out.println("Error al intentar abrir la BD");
+			e.printStackTrace();
 			return null;
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 			return conn;
 		}
 	}
@@ -44,16 +47,14 @@ public class ConexionBd {
 	 *
 	 * @return la conexión cerrada.
 	 */
-	public static ConexionBd closeConnection() {
-            if (conn != null) {
-                conn.close();
-            }
+	public static Connection closeConnection() {
+		try {
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return conn;
 	}
-
-    private void close() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-  
 }
