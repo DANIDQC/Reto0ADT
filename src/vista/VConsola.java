@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.Controlador;
+import modelo.Convocatoria;
 import modelo.Dificultad;
 import modelo.Enunciado;
 import modelo.UnidadDidactica;
@@ -35,7 +36,7 @@ public class VConsola {
             switch (opc) {
                 case 1:
                     //opcion1();
-                crearUnidadDidactica(con);
+                crearUnidadDidacticaConvocatoria(con);
                     break;
                 case 2:
                     //opcion2();
@@ -64,7 +65,7 @@ public class VConsola {
         }while(opc!=0);
     }
     
-        private static void crearUnidadDidactica(Controlador con) {
+        private static void crearUnidadDidacticaConvocatoria(Controlador con) {
                 
           UnidadDidactica nuevo= new UnidadDidactica();
           
@@ -73,9 +74,24 @@ public class VConsola {
           nuevo.setEvaluacion(utilidades.Utilidades.introducirCadena("Introduce la evaluacion de la Unidad Didactica"));
           nuevo.setDescripcion(utilidades.Utilidades.introducirCadena("Introduce la descripcion de la Unidad Didactica"));
           // 
+          
           boolean existe= con.crearUnidadDidactica(nuevo);
           
+        
+          crearConvocatoria(con);
     }
+        
+        private static void crearConvocatoria(Controlador con) {
+          
+          Convocatoria nuevo= new Convocatoria();
+          
+          System.out.println("Ahora introduce los datos de la convocatoria");
+          nuevo.setDescripcion(utilidades.Utilidades.introducirCadena("Introduce la descripcion de la convocatoria"));
+          nuevo.setFecha(utilidades.Utilidades.pidoFechaDMA("Introduce la fecha de la Convocatoria"));
+          nuevo.setCurso(utilidades.Utilidades.introducirCadena("Introduce el curso de la convocatoria"));
+
+          boolean existe= con.crearConvocatoria(nuevo);    }
+
     
       private static void crearEnunciado(Controlador con) {
                 
@@ -89,5 +105,5 @@ public class VConsola {
           boolean existe= con.crearEnunciado(nuevo);
           
     }
-      
+
 }

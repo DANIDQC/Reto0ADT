@@ -61,15 +61,15 @@ public class ImplementacionBd implements Dao{
     }
     
     @Override
-    public boolean crearEnunciado(Enunciado enunciado) {
+    public boolean crearConvocatoria(Convocatoria convocatoria) {
         con = ConexionBd.openConnection();
-        String CreacionEnunciado ="Insert into enunciado (descripcion, nivel, disponible, ruta)values(?,?,?,?)";
+        String CreacionEnunciado ="Insert into convocatoria (convocatoria, descripcion, fecha, curso)values(?,?,?,?)";
         try{
             stmt= con.prepareStatement(CreacionEnunciado);
-			stmt.setString(1, enunciado.getDescripcion());
-			stmt.setString(2, enunciado.getDificultad());
-                        stmt.setBoolean(3, enunciado.isDisponible());
-			stmt.setString (4, enunciado.getRuta());			
+			stmt.setString(1, convocatoria.getConvocatoria());
+			stmt.setString(2, convocatoria.getDescripcion());
+                        stmt.setString(3, convocatoria.getFecha().toString());
+			stmt.setString (4, convocatoria.getCurso());			
 			stmt.executeUpdate();
                         return true;
         }catch(SQLException e){
@@ -87,12 +87,6 @@ public class ImplementacionBd implements Dao{
 			}
 		}
         
-    }
-
-    @Override
-    public boolean crearConvocatoria(ConvocatoriaExamen convocatoria) {
-       
-        return false;
     }
 
     @Override
@@ -131,6 +125,11 @@ public class ImplementacionBd implements Dao{
 			ConexionBd.closeConnection();
 		}
         return null;
+    }
+
+    @Override
+    public boolean crearEnunciado(Enunciado enunciado) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

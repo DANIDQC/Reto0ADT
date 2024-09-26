@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import modelo.Convocatoria;
 import modelo.Enunciado;
 import modelo.ImplementacionBd;
 import modelo.UnidadDidactica;
@@ -18,15 +19,29 @@ public class Controlador {
     
     /**
      *
+     * @param unidadDidactica
+     * @return
+     */
+    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
+         boolean crearUnidadDidactica = imple.crearUnidadDidactica(unidadDidactica);
+        return crearUnidadDidactica;    }
+    
+    /**
+     *
+     * @param convocatoria
+     * @return
+     */
+    public boolean crearConvocatoria(Convocatoria convocatoria) {
+         boolean crearConvocatoria = imple.crearConvocatoria(convocatoria);
+        return crearConvocatoria;    }
+    
+    /**
+     *
      * @param enunciado
      * @return
      */
     public boolean crearEnunciado(Enunciado enunciado ){
         boolean crearEnunciado = imple.crearEnunciado(enunciado);
         return crearEnunciado;    }
-
-    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
-         boolean crearUnidadDidactica = imple.crearUnidadDidactica(unidadDidactica);
-        return crearUnidadDidactica;    }
     
 }

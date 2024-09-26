@@ -8,7 +8,7 @@
 package controlador;
 
 import java.util.List;
-import modelo.ConvocatoriaExamen;
+import modelo.Convocatoria;
 import modelo.UnidadDidactica;
 import modelo.Enunciado;
 
@@ -20,7 +20,7 @@ public interface Dao {
     
     public boolean crearUnidadDidactic(UnidadDidactica unidad);
     public boolean crearEnunciado(Enunciado enunciado);
-    public boolean crearConvocatoria(ConvocatoriaExamen convocatoria);
+    public boolean crearConvocatoria(Convocatoria convocatoria);
     public List<UnidadDidactica> listaUnidaades(UnidadDidactica unidades);
     
 }
