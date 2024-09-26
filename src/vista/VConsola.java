@@ -45,14 +45,15 @@ public class VConsola {
                     break;
                 case 2:
                     //opcion2();
-               crearEnunciado(con);
+                crearEnunciado(con);
                     break;
                 case 3:
                     //opcion3();
-                    
+                consultarEnunciadosDeUnidadDidactica(con);
                     break;
                 case 4:
                     //opcion4();
+                    
                     break;
                 case 5:
                     //opcion5();
@@ -81,6 +82,17 @@ public class VConsola {
           System.out.println(nuevo.toString());
           boolean existe= con.crearEnunciado(nuevo);
           
+    }
+
+    private static void consultarEnunciadosDeUnidadDidactica(Controlador con) {
+        String unidad="";
+        
+        Enunciado enunciado= new Enunciado();
+        unidad= utilidades.Utilidades.introducirCadena("Introduce una unidad didactrica");        
+        enunciado.toString();
+        
+        
+
     }
       
 }
