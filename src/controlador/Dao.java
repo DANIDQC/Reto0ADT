@@ -9,9 +9,7 @@ package controlador;
 
 import java.util.List;
 import modelo.ConvocatoriaExamen;
-import modelo.Enunciado;
 import modelo.UnidadDidactica;
-
 import modelo.Enunciado;
 
 /**
