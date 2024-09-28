@@ -13,10 +13,10 @@ import java.time.LocalDate;
  *
  * @author 2dam
  */
-public class ConvocatoriaExamen {
+public class Convocatoria {
     private String convocatoria = "";
     private String descripcion = "";
-    private LocalDate LocalDate;
+    private LocalDate fecha;
     private String curso = "";
 
     public String getConvocatoria() {
@@ -35,12 +35,12 @@ public class ConvocatoriaExamen {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getLocalDate() {
-        return LocalDate;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
-    public void setLocalDate(LocalDate LocalDate) {
-        this.LocalDate = LocalDate;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     public String getCurso() {

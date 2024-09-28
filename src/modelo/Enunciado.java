@@ -5,27 +5,33 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author 2dam
  */
 public class Enunciado {
-    private Integer id = 0;
     private String descripcion = "";
-    private enum Dificultad {
-        LOW,
-        MEDIUM,
-        HIGH
-      }
+    private String dificultad;
     private boolean disponible = true;
     private String ruta;
+    private List <Integer> unidades = new ArrayList<>();
     
-    public Integer getId() {
-        return id;
+   public String getDificultad() {
+        return dificultad;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setDificultad(String dificultad) {
+        this.dificultad = dificultad;
+    }
+    public List<Integer> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<Integer> unidades) {
+        this.unidades = unidades;
     }
 
     public String getDescripcion() {
@@ -51,4 +57,13 @@ public class Enunciado {
     public void setRuta(String ruta) {
         this.ruta = ruta;
     }
+    public void introducirUnidades(){
+        
+    }
+
+    @Override
+    public String toString() {
+        return "Enunciado{ descripcion=" + descripcion + ", dificultad=" + dificultad + ", disponible=" + disponible + ", ruta=" + ruta + ", unidades=" + unidades + '}';
+    }
+    
 }
