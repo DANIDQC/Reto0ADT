@@ -56,7 +56,7 @@ public class Convocatoria {
         return idEnunciado;
     }
 
-    public void setIdEnunciado(Int idEnunciado) {
+    public void setIdEnunciado(Integer idEnunciado) {
         this.idEnunciado = idEnunciado;
     }
 }
