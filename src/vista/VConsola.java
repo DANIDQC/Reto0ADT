@@ -52,7 +52,8 @@ public class VConsola {
             }
         } while (opc != 0);
     }
-    
+
+    //Este metodo crea una Unidad didáctica (UnidadDidactica), lo guarda en la base de datos y luego redirige al metodo crearConvocatoria.
     private static void crearUnidadDidacticaConvocatoria(Controlador con) {
         UnidadDidactica nuevo = new UnidadDidactica();
           
@@ -65,7 +66,8 @@ public class VConsola {
         
         crearConvocatoria(con);
     }
-        
+
+    //Este metodo crea objeto Convocatoria y lo guarda en la base de datos.
     private static void crearConvocatoria(Controlador con) {
         Convocatoria nuevo = new Convocatoria();
           
@@ -79,6 +81,7 @@ public class VConsola {
         boolean existe = con.crearConvocatoria(nuevo, descripcionEnunciado); 
     }
 
+   //Este metodo crea objeto Enunciado y lo guarda en la base de datos.
     private static void crearEnunciado(Controlador con) {
         Enunciado nuevo = new Enunciado();
           
@@ -90,6 +93,7 @@ public class VConsola {
         boolean existe = con.crearEnunciado(nuevo);
     }
 
+   //Este metodo busca en lka base de datos las convocatorias segun un nombre de enunciado que da el usuario.
     private static void consultarConvocatorias(Controlador con) {
         String enunciado = utilidades.Utilidades.introducirCadena("Introduce el enunciado de la convocatoria a consultar:");
         
@@ -108,7 +112,8 @@ public class VConsola {
             }
         }
     }
-    
+
+   //Este metodo muestra una convocatoria en base el nombre introducido, le muestra sus datos y si el usuario quiere, le permite cambiar el idEnunciado de la convocatoria para que se asigne a otro enunciado.
     private static void asignarEnunciadoAConvocatoria(Controlador con) {
      
         String nombreConvocatoria = utilidades.Utilidades.introducirCadena("Introduce el nombre de la convocatoria que deseas modificar:");
