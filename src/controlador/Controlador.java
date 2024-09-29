@@ -63,10 +63,20 @@ public class Controlador {
         return imple.buscarConvocatoriaPorNombre(nombreConvocatoria);
     }
 
+    /**
+    *
+    * @param nombreConvocatoria
+    * @return
+    */
     public String obtenerNombreEnunciadoPorConvocatoria(String nombreConvocatoria) {
         return imple.obtenerNombreEnunciadoPorConvocatoria(nombreConvocatoria);
     }
 
+    /**
+    *
+    * @param nombreConvocatoria, nuevoNombreEnunciado
+    * @return
+    */
     public boolean actualizarEnunciadoConvocatoria(String nombreConvocatoria, String nuevoNombreEnunciado) {
         return imple.actualizarEnunciadoConvocatoria(nombreConvocatoria, nuevoNombreEnunciado);
     }
