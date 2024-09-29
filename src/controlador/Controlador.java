@@ -16,7 +16,7 @@ import modelo.UnidadDidactica;
  */
 public class Controlador {
     ImplementacionBd imple= new ImplementacionBd();
-    
+
     /**
      *
      * @param enunciado
@@ -54,9 +54,7 @@ public class Controlador {
         boolean crearConvocatoria = imple.crearConvocatoria(convocatoria, descripcionEnunciado);
         return crearConvocatoria;    
     }
-    
    
 
-   
-      
+
 }

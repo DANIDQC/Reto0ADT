@@ -12,14 +12,15 @@ import utilidades.Utilidades;
  * @author 2dam
  */
 public class UnidadDidactica {
+
     
     private Integer id;
+
     private String acronimo = "";
     private String titulo = "";
     private String evaluacion = "";
     private String descripcion = "";
-   
-
+  
     public Integer getId() {
         return id;
     }
@@ -27,6 +28,7 @@ public class UnidadDidactica {
     public void setId(Integer id) {
         this.id = id;
     }
+
 
     public String getAcronimo() {
         return acronimo;

@@ -7,8 +7,6 @@ package modelo;
 
 import java.time.LocalDate;
 
-
-
 /**
  *
  * @author 2dam
@@ -18,6 +16,8 @@ public class Convocatoria {
     private String descripcion = "";
     private LocalDate fecha;
     private String curso = "";
+    private Integer idEnunciado = 0;
+
 
     public String getConvocatoria() {
         return convocatoria;
@@ -39,8 +39,9 @@ public class Convocatoria {
         return fecha;
     }
 
-    public void setFecha(LocalDate LocalDate) {
-        this.fecha = LocalDate;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+
     }
 
     public String getCurso() {
@@ -51,4 +52,12 @@ public class Convocatoria {
         this.curso = curso;
     }
 
+     
+    public Integer getIdEnunciado() {
+        return idEnunciado;
+    }
+
+    public void setIdEnunciado(Integer idEnunciado) {
+        this.idEnunciado = idEnunciado;
+    }
 }

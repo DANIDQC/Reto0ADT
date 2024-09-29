@@ -1,32 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import controlador.Controlador;
+
 import java.util.ArrayList;
+
 import java.util.List;
 import modelo.Convocatoria;
 import modelo.Dificultad;
 import modelo.Enunciado;
 import modelo.UnidadDidactica;
 
+
 /**
  *
  * @author 2dam
- */
+*/
+
 public class VConsola {
 
-    /**
-     * @param args the command line arguments
-     */
-   
    
     public static void main(String[] args) {
         Integer opc = 0;
         Controlador con = new Controlador();
+
         do{
             
             System.out.println("1. Crear una unidad didáctica y convocatoria.\n"+
@@ -36,12 +32,10 @@ public class VConsola {
             "5. Visualizar el documento de enunciado.\n"+
             "6. Asignar enunciado a convocatoria.\n"+
             "0. Salir\n"+
-            "Elige una opcion: \n");
-
-            opc = utilidades.Utilidades.leerInt(0, 6);
 
             switch (opc) {
                 case 1:
+
                     //opcion1();
                 crearUnidadDidacticaConvocatoria(con);
                     break;
@@ -61,7 +55,8 @@ public class VConsola {
                     //opcion5();
                     break;
                 case 6:
-                    //opcion6();
+                    // Implementar opción 6
+
                     break;
                 case 0:
                     System.out.println("Hasta la vista.");
@@ -69,7 +64,7 @@ public class VConsola {
                 default:
                     System.out.println("Opción no válida. Intenta de nuevo.");
                     break;
-            }
+
         }while(opc!=0);
     }
     
@@ -127,7 +122,6 @@ public class VConsola {
         } else {
             System.out.println("Error al crear la enunciado.");
         }
-
     }
 
 
@@ -136,6 +130,7 @@ public class VConsola {
 
     String enunciado = utilidades.Utilidades.introducirCadena("Introduce el enunciado de la convocatoria a consultar:");
     
+
     List<Convocatoria> convocatorias = con.consultarConvocatoriasPorEnunciado(enunciado); 
 
     if (convocatorias.isEmpty()) {
@@ -150,5 +145,4 @@ public class VConsola {
         }
     }
 }
-
 }
