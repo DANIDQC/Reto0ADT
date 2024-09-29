@@ -7,8 +7,6 @@ package modelo;
 
 import java.time.LocalDate;
 
-
-
 /**
  *
  * @author 2dam
