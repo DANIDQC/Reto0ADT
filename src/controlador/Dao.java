@@ -18,9 +18,9 @@ import modelo.Enunciado;
  */
 public interface Dao {
     
-    public boolean crearUnidadDidactic(UnidadDidactica unidad);
+    public boolean crearUnidadDidactica(UnidadDidactica unidad);
     public boolean crearEnunciado(Enunciado enunciado);
-    public boolean crearConvocatoria(Convocatoria convocatoria);
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado);
     public List<UnidadDidactica> listaUnidaades(UnidadDidactica unidades);
     public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciado);
     
