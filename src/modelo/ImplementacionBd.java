@@ -63,13 +63,14 @@ public class ImplementacionBd implements Dao{
     @Override
     public boolean crearConvocatoria(Convocatoria convocatoria) {
         con = ConexionBd.openConnection();
-        String CreacionEnunciado ="Insert into convocatoria (convocatoria, descripcion, fecha, curso)values(?,?,?,?)";
+        String CreacionEnunciado ="Insert into convocatoria (convocatoria, descripcion, fecha, curso, id_Enunciado)values(?,?,?,?,?)";
         try{
             stmt= con.prepareStatement(CreacionEnunciado);
 			stmt.setString(1, convocatoria.getConvocatoria());
 			stmt.setString(2, convocatoria.getDescripcion());
                         stmt.setString(3, convocatoria.getFecha().toString());
-			stmt.setString (4, convocatoria.getCurso());			
+			stmt.setString (4, convocatoria.getCurso());	
+			stmt.setInteger (5, convocatoria.getIdEnunciado());
 			stmt.executeUpdate();
                         return true;
         }catch(SQLException e){
@@ -88,6 +89,25 @@ public class ImplementacionBd implements Dao{
 		}
         
     }
+	
+    public Integer buscarIdEnunciadoPorDescripcion(String descripcionEnunciado) {
+    	Integer id = null;
+    	String sql = "SELECT id FROM enunciado WHERE descripcion = ?";
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+		stmt.setString(1, descripcionEnunciado);
+		ResultSet rs = stmt.executeQuery();
+	
+		if (rs.next()) {
+		    id = rs.getInt("id");
+		}
+		rs.close();
+        } catch (SQLException e) {
+		e.printStackTrace();
+    }
+
+    return id;
+}
 
     @Override
     public List <UnidadDidactica> listaUnidaades(UnidadDidactica unidades) {
