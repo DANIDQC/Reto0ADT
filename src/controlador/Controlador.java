@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.util.List;
 import modelo.Convocatoria;
 import modelo.Enunciado;
 import modelo.ImplementacionBd;
@@ -15,33 +16,58 @@ import modelo.UnidadDidactica;
  * @author 2dam
  */
 public class Controlador {
-    ImplementacionBd imple= new ImplementacionBd();
-    
+    ImplementacionBd imple = new ImplementacionBd();
+
     /**
      *
      * @param unidadDidactica
      * @return
      */
     public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
-         boolean crearUnidadDidactica = imple.crearUnidadDidactica(unidadDidactica);
-        return crearUnidadDidactica;    }
-    
+        return imple.crearUnidadDidactica(unidadDidactica);
+    }
+
     /**
      *
      * @param convocatoria
      * @return
      */
-    public boolean crearConvocatoria(Convocatoria convocatoria) {
-         boolean crearConvocatoria = imple.crearConvocatoria(convocatoria);
-        return crearConvocatoria;    }
-    
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
+        return imple.crearConvocatoria(convocatoria, descripcionEnunciado); 
+    }
+
     /**
      *
      * @param enunciado
      * @return
      */
-    public boolean crearEnunciado(Enunciado enunciado ){
-        boolean crearEnunciado = imple.crearEnunciado(enunciado);
-        return crearEnunciado;    }
-    
+    public boolean crearEnunciado(Enunciado enunciado) {
+        return imple.crearEnunciado(enunciado);
+    }
+
+    /**
+     *
+     * @param enunciadoDescripcion
+     * @return
+     */
+    public List<Convocatoria> consultarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
+        return imple.buscarConvocatoriasPorEnunciado(enunciadoDescripcion); 
+    }
+
+    /**
+    *
+    * @param nombreConvocatoria
+    * @return
+    */
+    public Convocatoria buscarConvocatoriaPorNombre(String nombreConvocatoria) {
+        return imple.buscarConvocatoriaPorNombre(nombreConvocatoria);
+    }
+
+    public String obtenerNombreEnunciadoPorConvocatoria(String nombreConvocatoria) {
+        return imple.obtenerNombreEnunciadoPorConvocatoria(nombreConvocatoria);
+    }
+
+    public boolean actualizarEnunciadoConvocatoria(String nombreConvocatoria, String nuevoNombreEnunciado) {
+        return imple.actualizarEnunciadoConvocatoria(nombreConvocatoria, nuevoNombreEnunciado);
+    }
 }
