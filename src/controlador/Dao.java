@@ -19,10 +19,17 @@ import modelo.Enunciado;
 public interface Dao {
     
     public boolean crearUnidadDidactica(UnidadDidactica unidad);
-    public boolean crearEnunciado(Enunciado enunciado);
-    public boolean crearConvocatoria(Convocatoria convocatoria);
+
+    /**
+     *
+     * @param enunciado
+     * @param acronimo
+     * @return
+     */
+    public boolean crearEnunciado(Enunciado enunciado, String acronimo);
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado);
     public List<UnidadDidactica> listaUnidades(UnidadDidactica unidades);
     public List<Enunciado> listaEnunciados(String acronimo);
-    
-    
-}
+    public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciado);
+   
+             }

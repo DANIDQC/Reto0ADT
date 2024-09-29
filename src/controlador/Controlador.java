@@ -6,6 +6,7 @@
 package controlador;
 
 import java.util.List;
+import modelo.Convocatoria;
 import modelo.Enunciado;
 import modelo.ImplementacionBd;
 import modelo.UnidadDidactica;
@@ -19,10 +20,11 @@ public class Controlador {
     /**
      *
      * @param enunciado
+     * @param acronimo
      * @return
      */
-    public boolean crearEnunciado(Enunciado enunciado ){
-        boolean crearEnunciado = imple.crearEnunciado(enunciado);
+    public boolean crearEnunciado(Enunciado enunciado, String acronimo){
+        boolean crearEnunciado = imple.crearEnunciado(enunciado, acronimo);
         return crearEnunciado;    }
     
     
@@ -31,4 +33,30 @@ public class Controlador {
         return listaUnidades;
                 
    }
+
+    public List<Convocatoria> consultarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
+ List<Convocatoria> convocatorias = imple.buscarConvocatoriasPorEnunciado(enunciadoDescripcion);
+    return convocatorias; // Retorna la lista de convocatorias encontradas    }
+}
+
+    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
+        boolean crearUnidadDidactica = imple.crearUnidadDidactica(unidadDidactica);
+        return crearUnidadDidactica;    
+    }
+    
+    /**
+     *
+     * @param convocatoria
+     * @param descripcionEnunciado
+     * @return
+     */
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
+        boolean crearConvocatoria = imple.crearConvocatoria(convocatoria, descripcionEnunciado);
+        return crearConvocatoria;    
+    }
+    
+   
+
+   
+      
 }

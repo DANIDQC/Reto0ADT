@@ -35,11 +35,11 @@ public class Convocatoria {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getLocalDate() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setLocalDate(LocalDate LocalDate) {
+    public void setFecha(LocalDate LocalDate) {
         this.fecha = LocalDate;
     }
 

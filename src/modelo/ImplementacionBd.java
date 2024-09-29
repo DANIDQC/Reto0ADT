@@ -22,19 +22,37 @@ public class ImplementacionBd implements Dao{
     private Connection con;
     private PreparedStatement stmt;
     private ResultSet resultSet;
+    
+    
     @Override
-    public boolean crearUnidadDidactica(UnidadDidactica unidad) {
-        con= ConexionBd.openConnection();
-        
-        
-        
-        return false;
-        
+    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
+         con = ConexionBd.openConnection();
+        String CreacionUnidadDidactica ="Insert into unidadDidactica (acronimo, titulo, evaluacion, descripcion)values(?,?,?,?)";
+        try{
+            stmt= con.prepareStatement(CreacionUnidadDidactica);
+			stmt.setString(1, unidadDidactica.getAcronimo());
+			stmt.setString(2, unidadDidactica.getTitulo());
+                        stmt.setString(3, unidadDidactica.getEvaluacion());
+			stmt.setString (4, unidadDidactica.getDescripcion());			
+			stmt.executeUpdate();
+                        return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+			return false;
+        } finally {
+            closeResources();
+		}
     }
    
 
     @Override
-    public boolean crearEnunciado(Enunciado enunciado) {
+    public boolean crearEnunciado(Enunciado enunciado, String acronimo) {
+       
+           int idUnidadDidactica = obtenerUnidadDidacticaPorId(acronimo);
+        if (idUnidadDidactica == -1) {
+            System.out.println("Enunciado no encontrado.");
+            return false;
+        }
         con = ConexionBd.openConnection();
         String CreacionEnunciado ="Insert into enunciado (descripcion, nivel, disponible, ruta)values(?,?,?,?)";
         try{
@@ -43,34 +61,60 @@ public class ImplementacionBd implements Dao{
 			stmt.setString(2, enunciado.getDificultad());
                         stmt.setBoolean(3, enunciado.isDisponible());
 			stmt.setString (4, enunciado.getRuta());			
-			stmt.executeUpdate();
-                        return true;
+
+                  int filasInsertadas = stmt.executeUpdate();
+            return filasInsertadas > 0;
         }catch(SQLException e){
             e.printStackTrace();
-			return false;
-        } finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-			} catch (SQLException e) {
-			}
-			if (con != null) {
-				ConexionBd.closeConnection();
-			}
-		}
+            return false;
+            
+        } finally {			
+		closeResources();
+	}
         
     }
+// Método para asociar unidades didácticas a un enunciado
+   
+  
+      public int obtenerUnidadDidacticaPorId(String acronimo) {
+    int id=-1;
+        String consulta = "SELECT id FROM unidaddidactica WHERE acronimo = ?"; 
+
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(consulta);
+            stmt.setString(1, acronimo);
+            resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt("id"); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return id;
+}
 
     @Override
-    public boolean crearConvocatoria(Convocatoria convocatoria) {
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
+        
+        
+            int idEnunciado = buscarIdEnunciadoPorDescripcion(descripcionEnunciado);
+        if (idEnunciado == -1) {
+            System.out.println("Enunciado no encontrado.");
+            return false;
+        }
+        
        con = ConexionBd.openConnection();
-        String CreacionCoonvocatoria ="Insert into convocatoria (convocatoria, descripcion,fecha, curso0)values(?,?,?,?)";
+        String CreacionCoonvocatoria ="Insert into convocatoria (convocatoria, descripcion,fecha, curso)values(?,?,?,?)";
         try{
             stmt= con.prepareStatement(CreacionCoonvocatoria);
 			stmt.setString(1, convocatoria.getConvocatoria());
 			stmt.setString(2, convocatoria.getDescripcion());
-                        stmt.setString(3,convocatoria.getLocalDate().toString());
+                        stmt.setString(3,convocatoria.getFecha().toString());
 			stmt.setString (4, convocatoria.getCurso());			
 			stmt.executeUpdate();
                         return true;
@@ -78,18 +122,31 @@ public class ImplementacionBd implements Dao{
             e.printStackTrace();
 			return false;
         } finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-			} catch (SQLException e) {
-			}
-			if (con != null) {
-				ConexionBd.closeConnection();
-			}
+			closeResources();
 		}
         
         
+    }
+    private int buscarIdEnunciadoPorDescripcion(String descripcion) {
+        int id = -1;
+        String consulta = "SELECT id FROM enunciado WHERE descripcion = ?"; 
+
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(consulta);
+            stmt.setString(1, descripcion);
+            resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                id = resultSet.getInt("id"); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return id;
     }
 
     @Override
@@ -116,16 +173,7 @@ public class ImplementacionBd implements Dao{
 
 			System.out.println("Error al listar unidades didacticas");
 		} finally {
-
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-			ConexionBd.closeConnection();
+                    closeResources();
 		}
         return null;
     }
@@ -153,18 +201,56 @@ public class ImplementacionBd implements Dao{
 
 			System.out.println("Error al listar unidades didacticas");
 		} finally {
-
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-			ConexionBd.closeConnection();
+			closeResources();
 		}
         return null;
     }
     
+    @Override
+    public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
+        
+
+        List<Convocatoria> convocatorias = new ArrayList<>();
+    
+    String sql = "SELECT c.* FROM convocatoria c " +
+                 "JOIN enunciado e ON c.id_Enunciado = e.id " + 
+                 "WHERE e.descripcion = ?";
+    try {
+        stmt = con.prepareStatement(sql);
+        stmt.setString(1, enunciadoDescripcion);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            Convocatoria convocatoria = new Convocatoria();
+            convocatoria.setDescripcion(rs.getString("descripcion"));
+            java.sql.Date sqlDate = rs.getDate("fecha");
+            if (sqlDate != null) {
+                convocatoria.setFecha(sqlDate.toLocalDate());
+            }
+            convocatoria.setCurso(rs.getString("curso"));
+            convocatorias.add(convocatoria);
+        }
+        rs.close(); 
+    } catch (SQLException e) {
+        e.printStackTrace(); 
+    }
+    
+    return convocatorias;
+    }
+    
+      private void closeResources() {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (con != null) {
+            ConexionBd.closeConnection();
+        }
+    }
 }
