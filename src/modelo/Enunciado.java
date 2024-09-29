@@ -13,12 +13,14 @@ import java.util.List;
  * @author 2dam
  */
 public class Enunciado {
+
+    private Integer id;
+
     private String descripcion = "";
     private String dificultad;
     private boolean disponible = true;
     private String ruta;
     private List <Integer> unidades = new ArrayList<>();
-    
    public String getDificultad() {
         return dificultad;
     }
@@ -33,6 +35,21 @@ public class Enunciado {
     public void setUnidades(List<Integer> unidades) {
         this.unidades = unidades;
     }
+   public String getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(String dificultad) {
+        this.dificultad = dificultad;
+    }
+    public List<Integer> getUnidades() {
+        return unidades;
+    }
+
+    public void setUnidades(List<Integer> unidades) {
+        this.unidades = unidades;
+    }
+    
 
     public String getDescripcion() {
         return descripcion;
@@ -56,9 +73,6 @@ public class Enunciado {
 
     public void setRuta(String ruta) {
         this.ruta = ruta;
-    }
-    public void introducirUnidades(){
-        
     }
 
     @Override

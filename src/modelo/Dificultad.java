@@ -12,7 +12,6 @@ package modelo;
 
     public enum Dificultad {
     ALTA, MEDIA, BAJA;
- 
   
        public static void mostrar() {
 
