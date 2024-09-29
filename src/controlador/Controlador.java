@@ -38,6 +38,15 @@ public class Controlador {
     
     /**
      *
+     * @param nombreConvocatoria
+     * @return
+     */
+    public List<Enunciado> buscarEnunciadosPorNombre(String nombreConvocatoria) {
+        return imple.buscarEnunciadosPorNombre(nombreConvocatoria);
+    }
+    
+    /**
+     *
      * @param enunciado
      * @return
      */
