@@ -22,6 +22,7 @@ public class ImplementacionBd implements Dao {
     private PreparedStatement stmt;
     private ResultSet resultSet;
 
+    //Este metodo crea un objeto UnidadDidactica y lo añade a la base de datos.
     @Override
     public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
         con = ConexionBd.openConnection();
@@ -42,6 +43,7 @@ public class ImplementacionBd implements Dao {
         }
     }
 
+    //Este metodo crea un objeto UnidadDidactica y lo añade a la base de datos.
     @Override
     public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
         int idEnunciado = buscarIdEnunciadoPorDescripcion(descripcionEnunciado);
@@ -68,6 +70,7 @@ public class ImplementacionBd implements Dao {
         }
     }
 
+    //Este metodo busca el ID de un objeto enunciado en base a su descripcion.
     private int buscarIdEnunciadoPorDescripcion(String descripcion) {
         int id = -1;
         String consulta = "SELECT id FROM enunciado WHERE descripcion = ?"; 
@@ -122,6 +125,7 @@ public class ImplementacionBd implements Dao {
         return listaUnidades;
     }
 
+    //Este metodo busca y recoge las convocatorias en base al nombre de un enunciado.
     @Override
     public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
         List<Convocatoria> convocatorias = new ArrayList<>();
@@ -155,7 +159,8 @@ public class ImplementacionBd implements Dao {
 
         return convocatorias;
     }
-    
+
+    //Este metodo recoge un objeto convocatoria en base a un nombre que inserta el usuario.
     public Convocatoria buscarConvocatoriaPorNombre(String nombreConvocatoria) {
         Convocatoria convocatoria = null;
         String sql = "SELECT * FROM convocatoria WHERE convocatoria = ?";
@@ -183,6 +188,7 @@ public class ImplementacionBd implements Dao {
         return convocatoria;
     }
 
+    //Este metodo busca el nombre de un enunciado en base a al id_enunciado de una convocatoria.
     public String obtenerNombreEnunciadoPorConvocatoria(String nombreConvocatoria) {
         String nombreEnunciado = null;
         String sql = "SELECT e.descripcion FROM convocatoria c " +
@@ -207,6 +213,7 @@ public class ImplementacionBd implements Dao {
         return nombreEnunciado;
     }
 
+    //Este metodo cambia el id_Enunciado de una convocatoria.
     public boolean actualizarEnunciadoConvocatoria(String nombreConvocatoria, String nuevoNombreEnunciado) {
         String sql = "UPDATE convocatoria SET id_Enunciado = (SELECT id FROM enunciado WHERE descripcion = ?) WHERE convocatoria = ?";
         
