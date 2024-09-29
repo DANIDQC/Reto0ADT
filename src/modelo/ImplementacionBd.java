@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,167 +17,158 @@ import java.util.List;
  *
  * @author 2dam
  */
-public class ImplementacionBd implements Dao{
+public class ImplementacionBd implements Dao {
     private Connection con;
     private PreparedStatement stmt;
     private ResultSet resultSet;
+
     @Override
-    public boolean crearUnidadDidactic(UnidadDidactica unidad) {
-        con= ConexionBd.openConnection();
-        
-        
-        
-        return false;
-        
-    }
-   
     public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
         con = ConexionBd.openConnection();
-        String CreacionUnidadDidactica ="Insert into unidadDidactica (acronimo, titulo, evaluacion, descripcion)values(?,?,?,?)";
-        try{
-            stmt= con.prepareStatement(CreacionUnidadDidactica);
-			stmt.setString(1, unidadDidactica.getAcronimo());
-			stmt.setString(2, unidadDidactica.getTitulo());
-                        stmt.setString(3, unidadDidactica.getEvaluacion());
-			stmt.setString (4, unidadDidactica.getDescripcion());			
-			stmt.executeUpdate();
-                        return true;
-        }catch(SQLException e){
-            e.printStackTrace();
-			return false;
-        } finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-			} catch (SQLException e) {
-			}
-			if (con != null) {
-				ConexionBd.closeConnection();
-			}
-		}
-        
-    }
-    
-    @Override
-    public boolean crearConvocatoria(Convocatoria convocatoria) {
-        con = ConexionBd.openConnection();
-        String CreacionEnunciado ="Insert into convocatoria (convocatoria, descripcion, fecha, curso, id_Enunciado)values(?,?,?,?,?)";
-        try{
-            stmt= con.prepareStatement(CreacionEnunciado);
-			stmt.setString(1, convocatoria.getConvocatoria());
-			stmt.setString(2, convocatoria.getDescripcion());
-                        stmt.setString(3, convocatoria.getFecha().toString());
-			stmt.setString (4, convocatoria.getCurso());	
-			stmt.setInteger (5, convocatoria.getIdEnunciado());
-			stmt.executeUpdate();
-                        return true;
-        }catch(SQLException e){
-            e.printStackTrace();
-			return false;
-        } finally {
-			try {
-				if (stmt != null) {
-					stmt.close();
-				}
-			} catch (SQLException e) {
-			}
-			if (con != null) {
-				ConexionBd.closeConnection();
-			}
-		}
-        
-    }
-	
-    public Integer buscarIdEnunciadoPorDescripcion(String descripcionEnunciado) {
-    	Integer id = null;
-    	String sql = "SELECT id FROM enunciado WHERE descripcion = ?";
-
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-		stmt.setString(1, descripcionEnunciado);
-		ResultSet rs = stmt.executeQuery();
-	
-		if (rs.next()) {
-		    id = rs.getInt("id");
-		}
-		rs.close();
+        String CreacionUnidadDidactica = "INSERT INTO unidadDidactica (acronimo, titulo, evaluacion, descripcion) VALUES (?, ?, ?, ?)";
+        try {
+            stmt = con.prepareStatement(CreacionUnidadDidactica);
+            stmt.setString(1, unidadDidactica.getAcronimo());
+            stmt.setString(2, unidadDidactica.getTitulo());
+            stmt.setString(3, unidadDidactica.getEvaluacion());
+            stmt.setString(4, unidadDidactica.getDescripcion());
+            stmt.executeUpdate();
+            return true;
         } catch (SQLException e) {
-		e.printStackTrace();
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeResources();
+        }
     }
 
-    return id;
-}
-
     @Override
-    public List <UnidadDidactica> listaUnidaades(UnidadDidactica unidades) {
-        List <UnidadDidactica> listaUnidades = new ArrayList<>();
-		con = ConexionBd.openConnection();
-               String consultaUnidades="Select acronimo, titulo, evaluacion,descripcion from unidadDidactica";
-                    
-		try {
-			stmt = con.prepareStatement(consultaUnidades);
-			resultSet = stmt.executeQuery();
-			while (resultSet.next()) {
-				UnidadDidactica unidadDidacticas = new UnidadDidactica();
-				unidadDidacticas.setAcronimo(resultSet.getString("acronimo"));
-				unidadDidacticas.setTitulo(resultSet.getString("titulo"));
-				unidadDidacticas.setEvaluacion(resultSet.getString("evaluacion"));
-                                unidadDidacticas.setDescripcion(resultSet.getString("descripcion"));
-                                
-				listaUnidades.add(unidadDidacticas);
-			}
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
+        int idEnunciado = buscarIdEnunciadoPorDescripcion(descripcionEnunciado);
+        if (idEnunciado == -1) {
+            System.out.println("Enunciado no encontrado.");
+            return false;
+        }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+        con = ConexionBd.openConnection();
+        String CreacionConvocatoria = "INSERT INTO convocatoria (descripcion, fecha, curso, id_Enunciado) VALUES (?, ?, ?, ?)";
+        try {
+            stmt = con.prepareStatement(CreacionConvocatoria);
+            stmt.setString(1, convocatoria.getDescripcion());
+            stmt.setString(2, convocatoria.getFecha().toString());
+            stmt.setString(3, convocatoria.getCurso());
+            stmt.setInt(4, idEnunciado); 
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeResources();
+        }
+    }
 
-			System.out.println("Error al listar unidades didacticas");
-		} finally {
+    private int buscarIdEnunciadoPorDescripcion(String descripcion) {
+        int id = -1;
+        String consulta = "SELECT id FROM enunciado WHERE descripcion = ?"; 
 
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(consulta);
+            stmt.setString(1, descripcion);
+            resultSet = stmt.executeQuery();
 
-			ConexionBd.closeConnection();
-		}
-        return null;
+            if (resultSet.next()) {
+                id = resultSet.getInt("id"); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+
+        return id;
     }
 
     @Override
     public boolean crearEnunciado(Enunciado enunciado) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        // Implementar este método según tus requisitos
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public List<UnidadDidactica> listaUnidaades(UnidadDidactica unidades) {
+        List<UnidadDidactica> listaUnidades = new ArrayList<>();
+        con = ConexionBd.openConnection();
+        String consultaUnidades = "SELECT acronimo, titulo, evaluacion, descripcion FROM unidadDidactica";
+
+        try {
+            stmt = con.prepareStatement(consultaUnidades);
+            resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                UnidadDidactica unidadDidactica = new UnidadDidactica();
+                unidadDidactica.setAcronimo(resultSet.getString("acronimo"));
+                unidadDidactica.setTitulo(resultSet.getString("titulo"));
+                unidadDidactica.setEvaluacion(resultSet.getString("evaluacion"));
+                unidadDidactica.setDescripcion(resultSet.getString("descripcion"));
+                listaUnidades.add(unidadDidactica);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al listar unidades didácticas");
+        } finally {
+            closeResources();
+        }
+        return listaUnidades;
     }
 
     @Override
     public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
         List<Convocatoria> convocatorias = new ArrayList<>();
-    
-    String sql = "SELECT c.* FROM convocatoria c " +
-                 "JOIN enunciado e ON c.id_Enunciado = e.id " + 
-                 "WHERE e.descripcion = ?";
-    try (PreparedStatement stmt = con.prepareStatement(sql)) {
-        stmt.setString(1, enunciadoDescripcion);
-        ResultSet rs = stmt.executeQuery();
+        String sql = "SELECT c.* FROM convocatoria c " +
+                     "JOIN enunciado e ON c.id_Enunciado = e.id " +
+                     "WHERE e.descripcion = ?";
 
-        while (rs.next()) {
-            Convocatoria convocatoria = new Convocatoria();
-            convocatoria.setDescripcion(rs.getString("descripcion"));
-            java.sql.Date sqlDate = rs.getDate("fecha");
-            if (sqlDate != null) {
-                convocatoria.setFecha(sqlDate.toLocalDate());
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, enunciadoDescripcion);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Convocatoria convocatoria = new Convocatoria();
+                convocatoria.setConvocatoria(rs.getString("convocatoria"));
+                convocatoria.setDescripcion(rs.getString("descripcion"));
+                java.sql.Date sqlDate = rs.getDate("fecha");
+                if (sqlDate != null) {
+                    convocatoria.setFecha(sqlDate.toLocalDate());
+                }
+                convocatoria.setCurso(rs.getString("curso"));
+                convocatorias.add(convocatoria);
             }
-            convocatoria.setCurso(rs.getString("curso"));
-            convocatorias.add(convocatoria);
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources();
         }
-        rs.close(); 
-    } catch (SQLException e) {
-        e.printStackTrace(); 
+
+        return convocatorias;
     }
-    
-    return convocatorias;
+
+    private void closeResources() {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (con != null) {
+            ConexionBd.closeConnection();
+        }
     }
-    
 }
