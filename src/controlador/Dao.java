@@ -8,7 +8,7 @@
 package controlador;
 
 import java.util.List;
-import modelo.ConvocatoriaExamen;
+import modelo.Convocatoria;
 import modelo.UnidadDidactica;
 import modelo.Enunciado;
 
@@ -17,10 +17,20 @@ import modelo.Enunciado;
  * @author lucia_puwj3zw
  */
 public interface Dao {
+
     
-    public boolean crearUnidadDidactic(UnidadDidactica unidad);
-    public boolean crearEnunciado(Enunciado enunciado);
-    public boolean crearConvocatoria(ConvocatoriaExamen convocatoria);
+    public boolean crearUnidadDidactica(UnidadDidactica unidad);
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado);
     public List<UnidadDidactica> listaUnidaades(UnidadDidactica unidades);
-    
-}
+    public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciado);
+   
+    /**
+     *
+     * @param enunciado
+     * @param acronimo
+     * @return
+     */
+    public boolean crearEnunciado(Enunciado enunciado, String acronimo);
+    public List<Enunciado> listaEnunciados(String acronimo);
+   
+             }
