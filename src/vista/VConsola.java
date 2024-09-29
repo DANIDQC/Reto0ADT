@@ -107,22 +107,31 @@ public class VConsola {
           
     }
 
-     private static void consultarConvocatorias(Controlador con) {
-
-    String enunciado = utilidades.Utilidades.introducirCadena("Introduce el enunciado de la convocatoria a consultar:");
+    private static void crearConvocatoria(Controlador con) {
+    Convocatoria nuevo = new Convocatoria();
     
-    List<Convocatoria> convocatorias = con.consultarConvocatoriasPorEnunciado(enunciado); 
+    System.out.println("Ahora introduce los datos de la convocatoria");
+    nuevo.setDescripcion(utilidades.Utilidades.introducirCadena("Introduce la descripcion de la convocatoria"));
+    nuevo.setFecha(utilidades.Utilidades.pidoFechaDMA("Introduce la fecha de la Convocatoria"));
+    nuevo.setCurso(utilidades.Utilidades.introducirCadena("Introduce el curso de la convocatoria"));
 
-    if (convocatorias.isEmpty()) {
-        System.out.println("No se encontraron convocatorias para el enunciado especificado.");
+    // Pedir al usuario el nombre del enunciado para asociar
+    String nombreEnunciado = utilidades.Utilidades.introducirCadena("Introduce el nombre del enunciado al que deseas asociar esta convocatoria:");
+    List<Enunciado> enunciados = con.buscarEnunciadosPorNombre(nombreEnunciado); 
+
+    if (enunciados.isEmpty()) {
+        System.out.println("No se encontró ningún enunciado con el nombre proporcionado.");
     } else {
-        System.out.println("Convocatorias encontradas:");
-        for (Convocatoria convocatoria : convocatorias) {
-            System.out.println("Descripción: " + convocatoria.getDescripcion());
-            System.out.println("Fecha: " + convocatoria.getFecha());
-            System.out.println("Curso: " + convocatoria.getCurso());
-            System.out.println("-----------------------");
+        Enunciado enunciadoEncontrado = enunciados.get(0);
+        nuevo.setIdEnunciado(enunciadoEncontrado.getId()); 
+
+        boolean existe = con.crearConvocatoria(nuevo);
+        if (existe) {
+            System.out.println("Convocatoria creada exitosamente.");
+        } else {
+            System.out.println("Error al crear la convocatoria.");
         }
     }
+}
 }
 }
