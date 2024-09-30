@@ -17,10 +17,19 @@ import modelo.Enunciado;
  * @author lucia_puwj3zw
  */
 public interface Dao {
+   
+    /**
+     *
+     * @param enunciado
+     * @param acronimo
+     * @return
+     */
+    public boolean crearEnunciado(Enunciado enunciado, String acronimo);
+    public List<Enunciado> listaEnunciados(String acronimo);
     //Esta interfaz se encarga de añadir un metodo para crear UnidadesDidacticas. 
     public boolean crearUnidadDidactica(UnidadDidactica unidad);
     //Esta interfaz se encarga de añadir un metodo para crear Enunciados. 
-    public boolean crearEnunciado(Enunciado enunciado);
+  
     //Esta interfaz se encarga de añadir un metodo para crear Convocatoria. 
     public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado);
     //Esta interfaz se encarga de añadir un metodo para listar Unidades Didacticas. 
@@ -30,3 +39,4 @@ public interface Dao {
     //Esta interfaz se encarga de añadir un metodo para buscar una Convocatoria en base a un nombre. 
     public Convocatoria buscarConvocatoriaPorNombre(String nombreConvocatoria);
 }
+

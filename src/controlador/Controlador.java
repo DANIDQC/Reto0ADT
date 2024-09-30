@@ -17,34 +17,45 @@ import modelo.UnidadDidactica;
  */
 public class Controlador {
     ImplementacionBd imple = new ImplementacionBd();
-
-    /**
-     *
-     * @param unidadDidactica
-     * @return
-     */
-    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
-        return imple.crearUnidadDidactica(unidadDidactica);
-    }
-
-    /**
-     *
-     * @param convocatoria
-     * @return
-     */
-    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
-        return imple.crearConvocatoria(convocatoria, descripcionEnunciado); 
-    }
-
     /**
      *
      * @param enunciado
+     * @param acronimo
      * @return
      */
-    public boolean crearEnunciado(Enunciado enunciado) {
-        return imple.crearEnunciado(enunciado);
-    }
 
+    public boolean crearEnunciado(Enunciado enunciado, String acronimo){
+        boolean crearEnunciado = imple.crearEnunciado(enunciado, acronimo);
+        return crearEnunciado;    }
+    
+    
+   public List<UnidadDidactica> listaUnidades(UnidadDidactica unidades){
+        List <UnidadDidactica> listaUnidades=imple.listaUnidades(unidades);
+        return listaUnidades;
+                
+   }
+
+    public List<Convocatoria> consultarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
+ List<Convocatoria> convocatorias = imple.buscarConvocatoriasPorEnunciado(enunciadoDescripcion);
+    return convocatorias; // Retorna la lista de convocatorias encontradas    }
+}
+
+    public boolean crearUnidadDidactica(UnidadDidactica unidadDidactica) {
+        boolean crearUnidadDidactica = imple.crearUnidadDidactica(unidadDidactica);
+        return crearUnidadDidactica;    
+    }
+    
+    /**
+     *
+     * @param convocatoria
+     * @param descripcionEnunciado
+     * @return
+     */
+    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
+        boolean crearConvocatoria = imple.crearConvocatoria(convocatoria, descripcionEnunciado);
+        return crearConvocatoria;    
+    }
+   
     /**
      *
      * @param enunciadoDescripcion
@@ -80,4 +91,5 @@ public class Controlador {
     public boolean actualizarEnunciadoConvocatoria(String nombreConvocatoria, String nuevoNombreEnunciado) {
         return imple.actualizarEnunciadoConvocatoria(nombreConvocatoria, nuevoNombreEnunciado);
     }
+
 }
