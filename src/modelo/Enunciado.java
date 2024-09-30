@@ -49,7 +49,6 @@ public class Enunciado {
     public void setUnidades(List<Integer> unidades) {
         this.unidades = unidades;
     }
-    
 
     public String getDescripcion() {
         return descripcion;

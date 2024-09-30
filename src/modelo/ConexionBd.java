@@ -56,4 +56,9 @@ public class ConexionBd {
 			e.printStackTrace();
 		}
 		return conn;
+
   }
+
+	
+}
+

@@ -103,24 +103,20 @@ public class ImplementacionBd implements Dao{
         
             int idEnunciado = buscarIdEnunciadoPorDescripcion(descripcionEnunciado);
 
-    @Override
-    public boolean crearConvocatoria(Convocatoria convocatoria, String descripcionEnunciado) {
-        int idEnunciado = buscarIdEnunciadoPorDescripcion(descripcionEnunciado);
-
         if (idEnunciado == -1) {
             System.out.println("Enunciado no encontrado.");
             return false;
         }
-
         
        con = ConexionBd.openConnection();
-        String CreacionCoonvocatoria ="Insert into convocatoria (convocatoria, descripcion,fecha, curso, id_Enunciado)values(?,?,?,?,?)";
+        String CreacionCoonvocatoria ="Insert into convocatoria ( convocatoria, descripcion,fecha, curso, id_Enunciado)values(?,?,?,?,?)";
         try{
             stmt= con.prepareStatement(CreacionCoonvocatoria);
 			stmt.setString(1, convocatoria.getConvocatoria());
 			stmt.setString(2, convocatoria.getDescripcion());
-      stmt.setString(3,convocatoria.getFecha().toString());
-      stmt.setInt(4, idEnunciado); 		
+                        stmt.setString(3,convocatoria.getFecha().toString());
+                        stmt.setString(4,convocatoria.getCurso()); 
+                        stmt.setInt(5, idEnunciado); 		
 			stmt.executeUpdate();
              return true;
         }catch(SQLException e){
@@ -152,63 +148,6 @@ public class ImplementacionBd implements Dao{
         }
 
         return id;
-    }
-
-    @Override
-    public List <UnidadDidactica> listaUnidades(UnidadDidactica unidades) {
-        List <UnidadDidactica> listaUnidades = new ArrayList<>();
-		con = ConexionBd.openConnection();
-               String consultaUnidades="Select acronimo, titulo, evaluacion,descripcion from unidadDidactica";
-                    
-		try {
-			stmt = con.prepareStatement(consultaUnidades);
-			resultSet = stmt.executeQuery();
-			while (resultSet.next()) {
-				UnidadDidactica unidadDidacticas = new UnidadDidactica();
-				unidadDidacticas.setAcronimo(resultSet.getString("acronimo"));
-				unidadDidacticas.setTitulo(resultSet.getString("titulo"));
-				unidadDidacticas.setEvaluacion(resultSet.getString("evaluacion"));
-                                unidadDidacticas.setDescripcion(resultSet.getString("descripcion"));
-                                
-				listaUnidades.add(unidadDidacticas);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-			System.out.println("Error al listar unidades didacticas");
-		} finally {
-                    closeResources();
-		}
-        return null;
-    }
-
-    @Override
-    public List<Enunciado> listaEnunciados(String acronimo) {
-    List <Enunciado> lista = new ArrayList<>();
-		con = ConexionBd.openConnection();
-               String consultaEnunciado="Select descripcion, nivel, disponible, ruta from where id= (select id intermedia where id_unidadDidactica =(select id from unidaddidactica where titulo=?";
-    try {
-			stmt = con.prepareStatement(consultaEnunciado);
-			resultSet = stmt.executeQuery();
-			while (resultSet.next()) {
-				Enunciado enunciado = new Enunciado();
-				enunciado.setDescripcion(resultSet.getString("descripcion"));
-				enunciado.setDificultad(resultSet.getString("nivel"));
-				enunciado.setDisponible(resultSet.getBoolean("disponible"));
-                                enunciado.setRuta(resultSet.getString("ruta"));
-                                
-				lista.add(enunciado);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-
-			System.out.println("Error al listar unidades didacticas");
-		} finally {
-			closeResources();
-		}
-        return null;
     }
     
     @Override
@@ -270,39 +209,6 @@ public class ImplementacionBd implements Dao{
         return listaUnidades;
     }
 
-    @Override
-    public List<Convocatoria> buscarConvocatoriasPorEnunciado(String enunciadoDescripcion) {
-        List<Convocatoria> convocatorias = new ArrayList<>();
-        String sql = "SELECT c.* FROM convocatoria c " +
-                     "JOIN enunciado e ON c.id_Enunciado = e.id " +
-                     "WHERE e.descripcion = ?";
-
-        try {
-            con = ConexionBd.openConnection();
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, enunciadoDescripcion);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Convocatoria convocatoria = new Convocatoria();
-                convocatoria.setConvocatoria(rs.getString("convocatoria"));
-                convocatoria.setDescripcion(rs.getString("descripcion"));
-                java.sql.Date sqlDate = rs.getDate("fecha");
-                if (sqlDate != null) {
-                    convocatoria.setFecha(sqlDate.toLocalDate());
-                }
-                convocatoria.setCurso(rs.getString("curso"));
-                convocatorias.add(convocatoria);
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeResources();
-        }
-
-        return convocatorias;
-    }
 
     private void closeResources() {
 
@@ -320,4 +226,80 @@ public class ImplementacionBd implements Dao{
             ConexionBd.closeConnection();
         }
     }
+
+    @Override
+    public List<Enunciado> listaEnunciados(String acronimo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<UnidadDidactica> listaUnidades(UnidadDidactica unidades) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+       public boolean actualizarEnunciadoConvocatoria(String nombreConvocatoria, String nuevoNombreEnunciado) {
+        String sql = "UPDATE convocatoria SET id_Enunciado = (SELECT id FROM enunciado WHERE descripcion = ?) WHERE convocatoria = ?";
+        
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, nuevoNombreEnunciado);
+            stmt.setString(2, nombreConvocatoria);
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+        	ConexionBd.closeConnection();
+        }
+    }
+           public String obtenerNombreEnunciadoPorConvocatoria(String nombreConvocatoria) {
+        String nombreEnunciado = null;
+        String sql = "SELECT e.descripcion FROM convocatoria c " +
+                     "JOIN enunciado e ON c.id_Enunciado = e.id " +
+                     "WHERE c.convocatoria = ?";
+        
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, nombreConvocatoria);
+            resultSet = stmt.executeQuery();
+            
+            if (resultSet.next()) {
+                nombreEnunciado = resultSet.getString("descripcion");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	ConexionBd.closeConnection();
+        }
+        
+        return nombreEnunciado;
+    }
+            public Convocatoria buscarConvocatoriaPorNombre(String nombreConvocatoria) {
+        Convocatoria convocatoria = null;
+        String sql = "SELECT * FROM convocatoria WHERE convocatoria = ?";
+        
+        try {
+            con = ConexionBd.openConnection();
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, nombreConvocatoria);
+            resultSet = stmt.executeQuery();
+            
+            if (resultSet.next()) {
+                convocatoria = new Convocatoria();
+                convocatoria.setConvocatoria(resultSet.getString("convocatoria"));
+                convocatoria.setDescripcion(resultSet.getString("descripcion"));
+                convocatoria.setFecha(resultSet.getDate("fecha").toLocalDate());
+                convocatoria.setCurso(resultSet.getString("curso"));
+                convocatoria.setIdEnunciado(resultSet.getInt("id_Enunciado"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	ConexionBd.closeConnection();
+        }
+        
+        return convocatoria;
+    }
+       
 }

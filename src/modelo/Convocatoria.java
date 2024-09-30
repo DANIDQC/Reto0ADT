@@ -17,8 +17,8 @@ public class Convocatoria {
     private LocalDate fecha;
     private String curso = "";
     private Integer idEnunciado = 0;
-
-
+  
+  
     public String getConvocatoria() {
         return convocatoria;
     }
@@ -51,7 +51,6 @@ public class Convocatoria {
     public void setCurso(String curso) {
         this.curso = curso;
     }
-
      
     public Integer getIdEnunciado() {
         return idEnunciado;
